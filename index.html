@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fancy Stopwatch</title>
+  <style media="screen">
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #3498db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #stopwatch {
+      width: 300px;
+      background: #2c3e50;
+      color: #ecf0f1;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      font-size: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #stopwatch .time {
+      display: flex;
+      align-items: center;
+    }
+
+    #stopwatch span {
+      background: #e74c3c;
+      color: #ecf0f1;
+      padding: 10px;
+      width: 50px;
+      border-radius: 5px;
+      margin: 5px;
+      display: inline-block;
+    }
+
+    #stopwatch .time span {
+      margin-left: 15px;
+    }
+
+    #stopwatch button {
+      font-size: 18px;
+      -webkit-appearance: none;
+      border: none;
+      background-color: #2ecc71;
+      color: white;
+      border-radius: 8px;
+      width: 120px;
+      height: 40px;
+      margin: 10px 0;
+      transition: .3s;
+      cursor: pointer;
+    }
+
+    #stopwatch button:last-child,
+    #stopwatch button:last-child:hover {
+      background-color: #e74c3c;
+    }
+
+    #stopwatch button:hover {
+      background: #27ae60;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="stopwatch">
+    <div class="time">
+      <span id="minute">00</span>
+      <span id="second">00</span>
+      <span id="ms">00</span>
+    </div>
+    <div>
+      <button id="start" onclick="start();">Start</button>
+      <button id="stop" onclick="stop();">Stop</button>
+      <button id="reset" onclick="reset();">Reset</button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var timer = 0;
+    var timerInterval;
+    var ms = document.getElementById('ms');
+    var second = document.getElementById('second');
+    var minute = document.getElementById('minute');
+
+    function start() {
+      stop();
+      timerInterval = setInterval(function () {
+        timer += 1 / 60;
+        msVal = Math.floor((timer - Math.floor(timer)) * 100);
+        secondVal = Math.floor(timer) - Math.floor(timer / 60) * 60;
+        minuteVal = Math.floor(timer / 60);
+        ms.innerHTML = msVal < 10 ? "0" + msVal.toString() : msVal;
+        second.innerHTML = secondVal < 10 ? "0" + secondVal.toString() : secondVal;
+        minute.innerHTML = minuteVal < 10 ? "0" + minuteVal.toString() : minuteVal;
+      }, 1000 / 60);
+    }
+
+    function stop() {
+      clearInterval(timerInterval);
+    }
+
+    function reset() {
+      clearInterval(timerInterval);
+      timer = 0;
+      ms.innerHTML = "00";
+      second.innerHTML = "00";
+      minute.innerHTML = "00";
+    }
+  </script>
+</body>
+
+</html>
